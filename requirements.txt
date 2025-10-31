@@ -1,0 +1,4 @@
+InquirerPy==0.3.4
+rich==14.2.0
+# Setting up modules for installation and work flow
+# Additionally also ensure version is up to date - last check 23/10/25
