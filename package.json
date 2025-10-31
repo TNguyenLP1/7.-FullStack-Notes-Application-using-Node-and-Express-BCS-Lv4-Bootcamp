@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/TNguyenLP1/7.-FullStack-Notes-Application-using-Node-and-Express-BCS-Lv4-Bootcamp#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "cors": "^2.8.5",
+    "nanoid": "^4.0.0"
   }
 }
