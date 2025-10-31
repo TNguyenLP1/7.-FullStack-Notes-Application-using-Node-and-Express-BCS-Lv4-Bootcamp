@@ -28,6 +28,29 @@ app.use(express.static(PUBLIC_DIR));
 // Serve static files from /public folder (like index.html)
 // Setting up middleware
 
+async function loadData() {
+try {
+    const txt = await fs.readFile(DATA_FILE, 'utf8');
+    // Read file as text
+    return JSON.parse(txt);
+    // Parse JSON into a JS object
+    } 
+
+catch (e) {
+    // If file doesn't exist yet, create an initial structure
+    const initial = { notes: [] };
+    await saveData(initial);
+    return initial;
+  }
+}
+// Load all notes from data.json
+
+async function saveData(data) {
+    await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
+}
+// Save notes back to data.json
+// Added helper functions
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
 // Server starting code
