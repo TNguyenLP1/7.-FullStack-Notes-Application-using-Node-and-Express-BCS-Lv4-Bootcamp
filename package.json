@@ -1,0 +1,24 @@
+{
+  "name": "7.-fullstack-notes-application-using-node-and-express-bcs-lv4-bootcamp",
+  "version": "1.0.0",
+  "description": "Seventh project assignment work for Level 4 Bootcamp",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TNguyenLP1/7.-FullStack-Notes-Application-using-Node-and-Express-BCS-Lv4-Bootcamp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TNguyenLP1/7.-FullStack-Notes-Application-using-Node-and-Express-BCS-Lv4-Bootcamp/issues"
+  },
+  "homepage": "https://github.com/TNguyenLP1/7.-FullStack-Notes-Application-using-Node-and-Express-BCS-Lv4-Bootcamp#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
