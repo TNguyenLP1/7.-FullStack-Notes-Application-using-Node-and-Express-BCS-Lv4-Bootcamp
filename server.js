@@ -247,6 +247,11 @@ app.delete('/api/notes/:id/permanent', async (req, res) => {
 });
 // Added hard delete (remove permanently)
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, 'index.htm'));
+});
+// Add Fallback route for client-side routers
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
 // Server starting code on port 3000 as required
