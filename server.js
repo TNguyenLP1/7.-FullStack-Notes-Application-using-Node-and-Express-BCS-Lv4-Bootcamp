@@ -190,6 +190,63 @@ app.post('/api/notes/:id/complete', async (req, res) => {
 });
 // Added function to mark note as completed/uncompleted
 
+app.delete('/api/notes/:id', async (req, res) => {
+  const data = await loadData();
+  // Load existing notes from data file
+  const note = data.notes.find(n => n.id === req.params.id);
+  // Find notes by ID
+  if (!note) return res.status(404).json({ error: 'Not found' });
+  // Added function to return 404 if notes not found
+
+  note.deleted = true;
+  // Mark note as deleted
+  note.deletedAt = new Date().toISOString();
+  // Added deletion time stamp
+  note.updatedAt = new Date().toISOString();
+  // Updated timestamp as needed
+  await saveData(data);
+  // Help to retrieve and save data
+  res.json({ ok: true });
+  // Added function to return found notes
+
+});
+// Add soft deletion for note mark as deleted but keep it in file, and allow for restoration
+
+app.post('/api/notes/:id/restore', async (req, res) => {
+  const data = await loadData();
+  // Load existing notes from data file
+  const note = data.notes.find(n => n.id === req.params.id);
+  // Find notes by ID
+  if (!note) return res.status(404).json({ error: 'Not found' });
+  // Added function to return 404 if notes are not found
+
+  note.deleted = false;
+  // Mark note as not deleted
+  note.deletedAt = null;
+  // Added function to clear deletion time stamp
+  note.updatedAt = new Date().toISOString();
+  // Updated time stamp as needed
+  await saveData(data);
+  // Help to retrieve and save data
+  res.json(note);
+  // Added function to return found notes
+  
+});
+// Add restoration function for the above soft delete
+
+app.delete('/api/notes/:id/permanent', async (req, res) => {
+  const data = await loadData();
+  // Load existing notes from data file
+  data.notes = data.notes.filter(n => n.id !== req.params.id);
+  // Remove note from array
+  await saveData(data);
+  // Help to retrieve and save data
+  res.json({ ok: true });
+  // Added function to return found notes
+  
+});
+// Added hard delete (remove permanently)
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
 // Server starting code on port 3000 as required
