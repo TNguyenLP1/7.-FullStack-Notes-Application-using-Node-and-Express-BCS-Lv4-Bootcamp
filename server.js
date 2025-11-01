@@ -247,7 +247,7 @@ app.delete('/api/notes/:id/permanent', async (req, res) => {
 });
 // Added hard delete (remove permanently)
 
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'index.htm'));
 });
 // Add Fallback route for client-side routers
