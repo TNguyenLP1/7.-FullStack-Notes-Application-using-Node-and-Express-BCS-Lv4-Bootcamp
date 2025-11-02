@@ -47,19 +47,33 @@
     </main>
   </div>
 
-<!-- Permanent Delete Confirmation Modal -->
-<div class="modal fade" id="deletedConfirmModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title">Delete Permanently</h5></div>
-      <div class="modal-body">Are you sure you want to permanently delete this note? This cannot be undone.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-danger" id="deletedConfirmBtn">Delete Permanently</button>
+  <!-- Permanent Delete Confirmation Modal -->
+  <div class="modal fade" id="deletedConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Delete Permanently</h5></div>
+        <div class="modal-body">Are you sure you want to permanently delete this note? This cannot be undone.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-red" id="deletedConfirmBtn">Delete Permanently</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Recover Confirmation Modal -->
+  <div class="modal fade" id="recoverConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Recover Task</h5></div>
+        <div class="modal-body">Are you sure you want to recover this note back to your task list?</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-purple" id="recoverConfirmBtn">Recover</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap and JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

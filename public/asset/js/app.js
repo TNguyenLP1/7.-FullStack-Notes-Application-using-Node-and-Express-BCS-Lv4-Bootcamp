@@ -268,6 +268,8 @@ if (document.getElementById('completedList')) {
 // ----------------------
 if (document.getElementById('deletedList')) {
   const list = document.getElementById('deletedList');
+  let currentRecoverId = null;
+  let recoverConfirmModal = new bootstrap.Modal(document.getElementById('recoverConfirmModal'));
 
   function renderDeleted() {
     list.innerHTML = '';
@@ -281,13 +283,21 @@ if (document.getElementById('deletedList')) {
           <small>Deleted: ${t.history.filter(h => h.action === 'Deleted').pop()?.timestamp || ''}</small>
         </div>
         <div class="task-actions">
-          <button class="btn btn-danger btn-sm perm-delete-btn">Delete Permanently</button>
+          <button class="btn btn-purple btn-sm recover-btn">Recover</button>
+          <button class="btn btn-red btn-sm perm-delete-btn">Delete Permanently</button>
         </div>
       `;
+
       li.querySelector('.perm-delete-btn').addEventListener('click', () => {
         currentDeleteIdDeletedPage = t.id;
         if (deletedConfirmModal) deletedConfirmModal.show();
       });
+
+      li.querySelector('.recover-btn').addEventListener('click', () => {
+        currentRecoverId = t.id;
+        recoverConfirmModal.show();
+      });
+
       list.appendChild(li);
     });
   }
@@ -297,8 +307,22 @@ if (document.getElementById('deletedList')) {
     deletedConfirmBtn.addEventListener('click', () => {
       tasks = tasks.filter(x => x.id !== currentDeleteIdDeletedPage);
       saveTasks();
-      if (deletedConfirmModal) deletedConfirmModal.hide();
+      deletedConfirmModal.hide();
       renderDeleted();
+    });
+  }
+
+  const recoverConfirmBtn = document.getElementById('recoverConfirmBtn');
+  if (recoverConfirmBtn) {
+    recoverConfirmBtn.addEventListener('click', () => {
+      const t = tasks.find(x => x.id === currentRecoverId);
+      if (t) {
+        t.deleted = false;
+        t.history.push({ timestamp: new Date().toISOString(), action: 'Recovered' });
+        saveTasks();
+        recoverConfirmModal.hide();
+        renderDeleted();
+      }
     });
   }
 
