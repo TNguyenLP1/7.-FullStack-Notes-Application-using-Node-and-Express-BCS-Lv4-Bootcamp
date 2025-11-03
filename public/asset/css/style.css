@@ -1,30 +1,28 @@
-/* ===== VARIABLES FOR LIGHT/DARK MODE ===== */
-/* Define CSS custom properties for colors, buttons, and borders */
 :root {
-  --bg-body: #e0e0e0;             /* Page background */
-  --bg-sidebar: #000;              /* Sidebar background */
-  --text-sidebar: #fff;            /* Sidebar text color */
-  --text-color: black;             /* General text color */
-  --bg-widget: #f4f4f4;            /* Widget background */
-  --bg-modal: #fff;                 /* Modal background */
-  --text-modal: #000;               /* Modal text color */
-  
-  /* Button colors */
-  --btn-primary-bg: #007bff;       /* Primary button background */
-  --btn-primary-hover: #0056b3;    /* Primary button hover */
-  --btn-red-bg: #dc3545;           /* Delete button */
-  --btn-red-hover: #a71d2a;
-  --btn-green-bg: #28a745;         /* Reactivate / mark active */
-  --btn-green-hover: #1c7430;
-  --btn-purple-bg: #6f42c1;        /* Recover button */
+  --bg-body: #e0e0e0; /* background color for the main page */
+  --bg-sidebar: #000; /* sidebar background */
+  --text-sidebar: #fff; /* sidebar text color */
+  --text-color: black; /* default text color */
+  --bg-widget: #f4f4f4; /* background for small boxes (widgets) */
+  --bg-modal: #fff; /* background for popup windows (modals) */
+  --text-modal: #000; /* text color inside modals */
+  --btn-primary-bg: #007bff; /* main blue button background */
+  --btn-primary-hover: #0056b3; /* blue button hover color */
+  --btn-red-bg: #dc3545; /* delete button color */
+  --btn-red-hover: #a71d2a; /* darker red on hover */
+  --btn-green-bg: #28a745; /* green for success/reactivate */
+  --btn-green-hover: #1c7430; /* darker green on hover */
+  --btn-purple-bg: #6f42c1; /* purple for “recover” actions */
   --btn-purple-hover: #4b2a99;
-  --btn-secondary-bg: #6c757d;     /* Cancel / secondary button */
+  --btn-secondary-bg: #6c757d; /* gray for cancel/secondary */
   --btn-secondary-hover: #5a6268;
-
-  --border-color: #ccc;            /* General border color */
+  --border-color: #ccc; /* light gray for borders */
 }
 
-/* ===== DARK MODE OVERRIDES ===== */
+/* ===== Variables for Light/Dark Mode ===== */
+/* These are reusable color variables for the whole site. 
+   The :root block sets default (light mode) colors. */
+
 body.dark-mode {
   --bg-body: #121212;
   --bg-sidebar: #1c1c1c;
@@ -33,56 +31,70 @@ body.dark-mode {
   --bg-widget: #1e1e1e;
   --bg-modal: #2b2b2b;
   --text-modal: #eee;
-
   --btn-primary-bg: #3b82f6;
   --btn-primary-hover: #1e40af;
   --btn-red-bg: #ef4444;
   --btn-red-hover: #991b1b;
   --btn-green-bg: #22c55e;
   --btn-green-hover: #166534;
-  --btn-purple-bg: #a855f7;
+  --btn-purple-bg: #a855f7; /* purple recover button in dark mode */
   --btn-purple-hover: #6b21a8;
   --btn-secondary-bg: #4b5563;
   --btn-secondary-hover: #374151;
-
-  --border-color: #444;
+  --border-color: #444; /* darker border */
 }
 
-/* ===== BASE LAYOUT ===== */
+/* Dark mode overrides */
+/* When the body has the class “dark-mode”, 
+   these variables replace the light ones. */
+
 body, html {
-  height: 100%;                    /* Full height */
+  height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: var(--bg-body);
-  color: var(--text-color);
+  font-family: 'Roboto', sans-serif; /* main font */
+  background-color: var(--bg-body); /* use theme background */
+  color: var(--text-color); /* use theme text color */
 }
 
-/* Container holds sidebar + main content */
+/* ===== Base Layout ===== */
+/* Set up page-wide styles for body and html */
+
 .container {
   display: flex;
-  min-height: 100vh;               /* Full viewport height */
+  min-height: 100vh; /* make it stretch vertically */
 }
 
-/* ===== SIDEBAR ===== */
+/* Container for main layout */
+/* This holds the sidebar and main content together */
+
 .sidebar {
-  height: 100%;                     /* Fill container vertically */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
   width: 300px;
+  max-width: 100%;
   display: flex;
-  flex-direction: column;           /* Stack elements vertically */
-  justify-content: space-between;   /* Push footer to bottom */
+  flex-direction: column;
+  justify-content: space-between;
   background-color: var(--bg-sidebar);
   color: var(--text-sidebar);
   padding-top: 20px;
   transition: transform 0.3s ease, background-color 0.3s, color 0.3s;
+  z-index: 1000; /* keeps it above other elements */
+  overflow-y: auto; /* allows scrolling if content is long */
 }
 
-/* Sidebar show animation for mobile */
+/* ===== Sidebar ===== */
+/* Sidebar stays fixed on the left side of the screen */
+
 .sidebar.show {
   transform: translateX(0);
 }
 
-/* Sidebar headings */
+/* Sidebar visible state (for mobile toggle) */
+
 .sidebar h1, .sidebar h2 {
   text-align: center;
 }
@@ -95,55 +107,50 @@ body, html {
   margin-bottom: 0;
 }
 
-/* Logo section border */
+/* Sidebar headings */
+
 .sidebar .logo {
   border-bottom: 2px solid var(--text-sidebar);
 }
-
-/* Dashboard title border */
 .sidebar .dash {
-  border-bottom: 2px solid var(--text-sidebar);
+  border-bottom: 2px solid white;
 }
 
-/* Sidebar menu list */
+/* Add dividers below sections */
+
+
 .sidebar ul {
   list-style: none;
   text-align: center;
   padding: 0;
   margin: 0;
 }
-
-/* Sidebar menu items */
 .sidebar ul li {
   padding: 15px 20px;
   border-bottom: 1px solid var(--border-color);
-  cursor: pointer;
+  cursor: pointer; /* makes it clickable */
   transition: background-color 0.2s ease;
 }
 .sidebar ul li:hover {
-  background-color: #1b2737;
+  background-color: #1b2737; /* darkens on hover */
 }
-
-/* Sidebar footer */
 .sidebar footer {
   text-align: center;
-
 }
 
-.sidebar footer p {
-  padding: 15px 20px;
-  margin-bottom: 0px;
-}
+/* Sidebar navigation list */
 
-/* ===== MAIN CONTENT ===== */
 .main-content {
-  flex: 1;                          /* Take remaining width */
+  flex: 1; /* takes up remaining space */
   padding: 20px;
-  overflow-y: auto;                 /* Scroll if content overflows */
+  overflow-y: auto;
   background-color: var(--bg-body);
+  margin-left: 300px; /* leaves space for sidebar */
 }
 
-/* Widget box styling */
+/* ===== Main Content ===== */
+/* The main area next to the sidebar */
+
 .widget {
   background-color: var(--bg-widget);
   padding: 20px;
@@ -153,67 +160,42 @@ body, html {
   transition: background-color 0.3s;
 }
 
-/* ===== BUTTONS ===== */
+/* ===== Widgets ===== */
+/* Content boxes with shadow and rounded corners */
+
 button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  color: white;                     /* White text for all buttons */
+  color: white; /* force white text */
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Primary buttons */
-.btn-blue {
-  background-color: var(--btn-primary-bg);
-  color: white;
-}
-.btn-blue:hover {
-  background-color: var(--btn-primary-hover);
-  color: white;
-}
+/* ===== Buttons ===== */
+/* General button setup */
 
+.btn-blue { background-color: var(--btn-primary-bg); color: white; }
+.btn-blue:hover { background-color: var(--btn-primary-hover); color: white; }
+/* Primary buttons (add/edit/save) */
+
+.btn-red { background-color: var(--btn-red-bg); color: white; }
+.btn-red:hover { background-color: var(--btn-red-hover); color: white; }
 /* Delete buttons */
-.btn-red {
-  background-color: var(--btn-red-bg);
-  color: white;
-}
-.btn-red:hover {
-  background-color: var(--btn-red-hover);
-  color: white;
-}
 
-/* Reactivate buttons */
-.btn-green {
-  background-color: var(--btn-green-bg);
-  color: white;
-}
-.btn-green:hover {
-  background-color: var(--btn-green-hover);
-  color: white;
-}
 
+.btn-green { background-color: var(--btn-green-bg); color: white; }
+.btn-green:hover { background-color: var(--btn-green-hover); color: white; }
+/* Reactivate / mark active buttons */
+
+.btn-purple { background-color: var(--btn-purple-bg); color: white; }
+.btn-purple:hover { background-color: var(--btn-purple-hover); color: white; }
 /* Recover buttons */
-.btn-purple {
-  background-color: var(--btn-purple-bg);
-  color: white;
-}
-.btn-purple:hover {
-  background-color: var(--btn-purple-hover);
-  color: white;
-}
 
+.btn-secondary { background-color: var(--btn-secondary-bg); color: white; }
+.btn-secondary:hover { background-color: var(--btn-secondary-hover); color: white; }
 /* Cancel / secondary buttons */
-.btn-secondary {
-  background-color: var(--btn-secondary-bg);
-  color: white;
-}
-.btn-secondary:hover {
-  background-color: var(--btn-secondary-hover);
-  color: white;
-}
 
-/* ===== TASK LIST BUTTONS ===== */
 #taskList li button,
 #completedList li button,
 #deletedList li button {
@@ -221,7 +203,9 @@ button {
   border-radius: 4px;
 }
 
-/* Align action buttons in deleted list */
+/* ===== Task List Buttons ===== */
+/* Smaller buttons inside task list items */
+
 #deletedList li .task-actions {
   display: flex;
   gap: 10px;
@@ -229,10 +213,10 @@ button {
   align-items: center;
   flex-wrap: wrap;
 }
+/* Deleted list buttons alignment */
 
-/* ===== MOBILE HEADER ===== */
 .mobile-header {
-  display: none;                    /* Hidden on desktop */
+  display: none;
   justify-content: space-between;
   align-items: center;
   background-color: var(--bg-sidebar);
@@ -240,52 +224,94 @@ button {
   padding: 10px;
 }
 
-/* Hamburger menu button */
+/* ===== Mobile Header ===== */
+/* Header shown on top when using mobile view */
+
 .mobile-header button {
   background: none;
   border: none;
   color: var(--text-sidebar);
   font-size: 1.2rem;
 }
+/* Mobile header button (like hamburger menu) */
 
-/* ===== RESPONSIVE LAYOUT ===== */
 @media (max-width: 992px) {
-  .container {
-    flex-direction: column;
-    height: auto;
+  .main-content {
+    margin-left: 0; /* remove sidebar gap */
+    padding: 10px; /* tighter padding */
   }
-  .sidebar { width: 100%; position: relative; }
-  .main-content { padding: 10px; }
 }
-@media (max-width: 768px) {
-  .container { flex-direction: column; }
-  .sidebar {
-    position: fixed;
-    top:0;
-    left:0;
-    height:100%;
-    width:260px;
-    transform:translateX(-100%);
-    z-index:1000;
-  }
-  .sidebar.show { transform: translateX(0); }
-  .mobile-header { display:flex; }
-  .main-content { margin-top:60px; }
-}
-@media (max-width: 480px) {
-  input[type="text"], textarea { width: 100%; }
-  button { width: 100%; margin-top: 10px; }
-}
+/* Tablet and smaller */
 
-/* ===== MODAL STYLING ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 260px;
+    transform: translateX(-100%); /* hide sidebar off-screen */
+    position: fixed;
+  }
+
+  .sidebar.show {
+    transform: translateX(0); /* slide it in when toggled */
+  }
+
+  .mobile-header {
+    display: flex; /* show header on mobile */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+  }
+
+  .main-content {
+    margin-left: 0;
+    margin-top: 0;
+    padding-top: 60px; /* space for header */
+  }
+}
+/* Mobile and small tablets */
+
+@media (max-width: 480px) {
+  input[type="text"], textarea {
+    width: 100%; /* inputs fill screen width */
+  }
+
+  button {
+    width: 100%; /* buttons stack vertically */
+    margin-top: 10px;
+  }
+}
+/* Very small screens */
+
+/* ===== Responsive ===== */
+/* Adjust layout for smaller screens */
+
 .modal-content {
   background-color: var(--bg-modal);
   color: var(--text-modal);
   transition: background-color 0.3s, color 0.3s;
 }
-.modal-header, .modal-footer { border-color: var(--border-color); }
+/* Modal content area */
 
-/* ===== DARK MODE TOGGLE IN SIDEBAR ===== */
+.modal-header, .modal-footer {
+  border-color: var(--border-color);
+}
+/* Modal header and footer styling */
+
+.modal-header {
+  background-color: black; /* black header */
+  color: #fff; /* white text for contrast */
+}
+
+body.dark-mode .modal-header {
+  background-color: #1c1c1c; /* darker grey tone for dark mode */
+  color: white; /* keep text white for readability */
+}
+/* Dark mode header (contrasting but dark-friendly) */
+
+/* ===== Modal Styling ===== */
+/* Popup window look and feel */
+
 .dark-mode-toggle {
   padding: 15px 20px;
   cursor: pointer;
@@ -295,10 +321,17 @@ button {
   align-items: center;
   transition: background-color 0.3s, color 0.3s;
 }
+
+/* ===== Dark Mode Toggle in Sidebar ===== */
+/* Switch to turn dark mode on/off */
+
 .dark-mode-toggle i {
   font-size: 1.2rem;
   transition: transform 0.4s ease, color 0.3s ease;
 }
+/* Icon inside the toggle (like sun/moon) */
+
 .dark-mode-toggle.dark i {
   transform: rotate(180deg);
 }
+/* Rotate the icon when dark mode is active */

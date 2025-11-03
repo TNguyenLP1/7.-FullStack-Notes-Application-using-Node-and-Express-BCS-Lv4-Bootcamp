@@ -1,20 +1,19 @@
-// ----------------------
-// app.js - fully working with delete, edit, and added confirmation modals
-// ----------------------
+const STORAGE_KEY = 'tri-nguyen-tasks'; 
+// Local storage key to save tasks
+let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); 
+// Load tasks from local storage or default to an empty array
 
-const STORAGE_KEY = 'tri-nguyen-tasks';
-let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-
-// Utility functions
 function saveTasks() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
+// Function to save tasks to localStorage
 
 function generateId() {
   return '_' + Math.random().toString(36).substr(2, 9);
 }
+// Function to generate a unique ID for each task
+// Utility functions
 
-// Modal instances
 let editModal = null;
 let deleteModal = null;
 let editConfirmModal = null;
@@ -25,6 +24,7 @@ let currentEditId = null;
 let currentDeleteId = null;
 let currentReactivateId = null;
 let currentDeleteIdDeletedPage = null;
+// Modal instances
 
 document.addEventListener('DOMContentLoaded', () => {
   const em = document.getElementById('editModal');
@@ -42,15 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const dcm = document.getElementById('deletedConfirmModal');
   if (dcm) deletedConfirmModal = new bootstrap.Modal(dcm);
 });
+// Initialize modal instances on DOM content loaded
 
-// ----------------------
-// THEME TOGGLE
-// ----------------------
 document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('themeToggle');
   const body = document.body;
 
-  // Initialize from localStorage
   if (localStorage.getItem('theme') === 'dark') {
     body.classList.add('dark-mode');
     if (themeToggle) {
@@ -58,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
       themeToggle.classList.add('dark');
     }
   }
+  // Initialize from localStorage if a theme is already set
 
-  // Toggle dark mode
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
       const icon = themeToggle.querySelector('i');
@@ -76,11 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
+  // Toggle dark mode when the theme toggle button is clicked
 
-// ----------------------
-// INDEX PAGE
-// ----------------------
+});
+// Theme toggle
+// Functionality to toggle between light and dark themes
+
 if (document.getElementById('taskList')) {
   const taskInput = document.getElementById('taskInput');
   const taskBodyInput = document.getElementById('taskBody');
@@ -90,11 +88,13 @@ if (document.getElementById('taskList')) {
   const editBody = document.getElementById('editBody');
   const editPreview = document.getElementById('editPreview');
 
-  // Add task
   addBtn.addEventListener('click', () => {
     const title = taskInput.value.trim();
     const body = taskBodyInput.value.trim();
-    if (!title) { errorMsg.textContent = 'Task title required'; return; }
+    if (!title) { 
+      errorMsg.textContent = 'Task title required'; 
+      return; 
+    }
     const newTask = {
       id: generateId(),
       title,
@@ -102,20 +102,23 @@ if (document.getElementById('taskList')) {
       completed: false,
       deleted: false,
       history: [],
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString() // Timestamp when task is created
     };
-    tasks.push(newTask);
-    saveTasks();
-    taskInput.value = '';
+    tasks.push(newTask); // Add new task to the list
+    saveTasks(); // Save updated tasks list to localStorage
+    taskInput.value = ''; // Clear input fields
     taskBodyInput.value = '';
-    renderList();
+    renderList(); 
+    // Re-render the list of tasks
   });
+  // Add new task
 
-  // Render index tasks
   function renderList() {
     const list = document.getElementById('taskList');
-    list.innerHTML = '';
-    tasks.filter(t => !t.completed && !t.deleted).forEach(t => {
+    list.innerHTML = ''; 
+    // Clear the task list before rendering
+    tasks.filter(t => !t.completed && !t.deleted).forEach(t => { 
+      // Filter out completed and deleted tasks
       const li = document.createElement('li');
       li.className = 'task-item list-group-item d-flex justify-content-between align-items-start';
       li.innerHTML = `
@@ -135,25 +138,30 @@ if (document.getElementById('taskList')) {
         t.completed = true;
         t.history.push({ timestamp: new Date().toISOString(), action: 'Completed' });
         saveTasks();
-        renderList();
+        renderList(); // Re-render task list
       });
+      // Event listener for marking task as completed
 
       li.querySelector('.edit-btn').addEventListener('click', () => {
         currentEditId = t.id;
         editTitle.value = t.title;
         editBody.value = t.body;
-        updateEditPreview(t);
-        editModal.show();
+        updateEditPreview(t); // Show preview of changes
+        editModal.show(); // Show the edit modal
       });
+      // Event listener for editing the task
 
       li.querySelector('.delete-btn').addEventListener('click', () => {
         currentDeleteId = t.id;
-        if (deleteModal) deleteModal.show();
+        if (deleteModal) deleteModal.show(); // Show the delete confirmation modal
       });
+      // Event listener for deleting the task
 
-      list.appendChild(li);
+      list.appendChild(li); 
+      // Append task to the list
     });
   }
+  // Function to render the task list on the index page
 
   function updateEditPreview(task) {
     editPreview.innerHTML = `
@@ -161,6 +169,7 @@ if (document.getElementById('taskList')) {
       <div><strong>Body</strong>: <s>${task.body || ''}</s> → ${editBody.value}</div>
     `;
   }
+  // Function to update the preview for editing the task
 
   editTitle.addEventListener('input', () => {
     const t = tasks.find(x => x.id === currentEditId);
@@ -170,14 +179,14 @@ if (document.getElementById('taskList')) {
     const t = tasks.find(x => x.id === currentEditId);
     if (t) updateEditPreview(t);
   });
+  // Update preview when title or body input changes
 
-  // Edit modal submit -> open confirmation modal
   document.getElementById('editForm').addEventListener('submit', e => {
     e.preventDefault();
-    if (editConfirmModal) editConfirmModal.show();
+    if (editConfirmModal) editConfirmModal.show(); // Show confirmation modal for editing
   });
+  // Handle the submit action for editing a task
 
-  // Confirm edit
   const editConfirmBtn = document.getElementById('editConfirmBtn');
   if (editConfirmBtn) {
     editConfirmBtn.addEventListener('click', () => {
@@ -192,14 +201,14 @@ if (document.getElementById('taskList')) {
         t.title = editTitle.value;
         t.body = editBody.value;
         saveTasks();
-        editConfirmModal.hide();
-        editModal.hide();
-        renderList();
+        editConfirmModal.hide(); // Close the confirmation modal
+        editModal.hide(); // Close the edit modal
+        renderList(); // Re-render task list
       }
     });
   }
+  // Confirm the edit action and save changes
 
-  // Delete confirmation
   const deleteConfirmBtn = document.getElementById('deleteConfirmBtnIndex');
   if (deleteConfirmBtn) {
     deleteConfirmBtn.addEventListener('click', () => {
@@ -208,24 +217,25 @@ if (document.getElementById('taskList')) {
         t.deleted = true;
         t.history.push({ timestamp: new Date().toISOString(), action: 'Deleted' });
         saveTasks();
-        deleteModal.hide();
-        renderList();
+        deleteModal.hide(); // Close delete modal
+        renderList(); // Re-render task list
       }
     });
   }
+  // Handle task deletion confirmation
 
-  renderList();
+  renderList(); 
+  // Initial render of task list
 }
+// Index.htm - Main task list management
 
-// ----------------------
-// COMPLETED PAGE
-// ----------------------
 if (document.getElementById('completedList')) {
   const list = document.getElementById('completedList');
 
   function renderCompleted() {
-    list.innerHTML = '';
-    tasks.filter(t => t.completed && !t.deleted).forEach(t => {
+    list.innerHTML = ''; // Clear the list
+    tasks.filter(t => t.completed && !t.deleted).forEach(t => { 
+      // Filter completed tasks
       const li = document.createElement('li');
       li.className = 'task-item list-group-item d-flex justify-content-between align-items-start';
       li.innerHTML = `
@@ -238,13 +248,18 @@ if (document.getElementById('completedList')) {
           <button class="btn btn-primary btn-sm mark-active-btn">Mark Active</button>
         </div>
       `;
+
       li.querySelector('.mark-active-btn').addEventListener('click', () => {
         currentReactivateId = t.id;
-        if (reactivateConfirmModal) reactivateConfirmModal.show();
+        if (reactivateConfirmModal) reactivateConfirmModal.show(); // Show reactivate modal
       });
-      list.appendChild(li);
+      // Event listener for marking task as active again (reopen it)
+
+      list.appendChild(li); 
+      // Append completed task to the list
     });
   }
+  // Render completed tasks
 
   const reactivateConfirmBtn = document.getElementById('reactivateConfirmBtn');
   if (reactivateConfirmBtn) {
@@ -255,25 +270,26 @@ if (document.getElementById('completedList')) {
         t.history.push({ timestamp: new Date().toISOString(), action: 'Marked Active' });
         saveTasks();
         if (reactivateConfirmModal) reactivateConfirmModal.hide();
-        renderCompleted();
+        renderCompleted(); 
+        // Re-render the completed tasks list
       }
     });
   }
+  // Handle reactivating a completed task
 
-  renderCompleted();
+  renderCompleted(); 
+  // Initial render of completed tasks
 }
+// Completed.htm - Completed tasks that are marked as complete
 
-// ----------------------
-// DELETED PAGE
-// ----------------------
 if (document.getElementById('deletedList')) {
   const list = document.getElementById('deletedList');
   let currentRecoverId = null;
   let recoverConfirmModal = new bootstrap.Modal(document.getElementById('recoverConfirmModal'));
 
   function renderDeleted() {
-    list.innerHTML = '';
-    tasks.filter(t => t.deleted).forEach(t => {
+    list.innerHTML = ''; // Clear the deleted list
+    tasks.filter(t => t.deleted).forEach(t => { // Filter deleted tasks
       const li = document.createElement('li');
       li.className = 'task-item list-group-item d-flex justify-content-between align-items-start';
       li.innerHTML = `
@@ -290,27 +306,33 @@ if (document.getElementById('deletedList')) {
 
       li.querySelector('.perm-delete-btn').addEventListener('click', () => {
         currentDeleteIdDeletedPage = t.id;
-        if (deletedConfirmModal) deletedConfirmModal.show();
+        if (deletedConfirmModal) deletedConfirmModal.show(); // Show permanent delete modal
       });
-
+      // Event listener for permanently deleting the task
+  
       li.querySelector('.recover-btn').addEventListener('click', () => {
         currentRecoverId = t.id;
-        recoverConfirmModal.show();
+        recoverConfirmModal.show(); // Show recovery confirmation modal
       });
+      // Event listener for recovering the task
 
-      list.appendChild(li);
+      list.appendChild(li); 
+      // Append deleted task to the list
     });
   }
+  // Render deleted tasks
 
   const deletedConfirmBtn = document.getElementById('deletedConfirmBtn');
   if (deletedConfirmBtn) {
     deletedConfirmBtn.addEventListener('click', () => {
-      tasks = tasks.filter(x => x.id !== currentDeleteIdDeletedPage);
+      tasks = tasks.filter(x => x.id !== currentDeleteIdDeletedPage); // Permanently delete task
       saveTasks();
-      deletedConfirmModal.hide();
-      renderDeleted();
+      deletedConfirmModal.hide(); // Close permanent delete modal
+      renderDeleted(); 
+      // Re-render deleted task list
     });
   }
+  // Handle permanent deletion of tasks
 
   const recoverConfirmBtn = document.getElementById('recoverConfirmBtn');
   if (recoverConfirmBtn) {
@@ -320,11 +342,15 @@ if (document.getElementById('deletedList')) {
         t.deleted = false;
         t.history.push({ timestamp: new Date().toISOString(), action: 'Recovered' });
         saveTasks();
-        recoverConfirmModal.hide();
-        renderDeleted();
+        recoverConfirmModal.hide(); // Close recovery modal
+        renderDeleted(); 
+        // Re-render deleted tasks list
       }
     });
   }
+  // Handle recovery of deleted tasks
 
-  renderDeleted();
+  renderDeleted(); 
+  // Initial render of deleted tasks
 }
+// Deleted.htm - Deleted tasks that are deleted
