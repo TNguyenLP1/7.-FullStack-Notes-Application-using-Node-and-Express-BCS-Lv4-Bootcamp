@@ -19,7 +19,7 @@
   --border-color: #ccc; /* light gray for borders */
 }
 
-/* ===== Variables for Light/Dark Mode ===== */
+/* Variables for Light/Dark Mode */
 /* These are reusable color variables for the whole site. 
    The :root block sets default (light mode) colors. */
 
@@ -57,7 +57,7 @@ body, html {
   color: var(--text-color); /* use theme text color */
 }
 
-/* ===== Base Layout ===== */
+/* Base Layout */
 /* Set up page-wide styles for body and html */
 
 .container {
@@ -86,7 +86,7 @@ body, html {
   overflow-y: auto; /* allows scrolling if content is long */
 }
 
-/* ===== Sidebar ===== */
+/* Sidebar */
 /* Sidebar stays fixed on the left side of the screen */
 
 .sidebar.show {
@@ -148,7 +148,7 @@ body, html {
   margin-left: 300px; /* leaves space for sidebar */
 }
 
-/* ===== Main Content ===== */
+/* Main Content */
 /* The main area next to the sidebar */
 
 .widget {
@@ -160,7 +160,7 @@ body, html {
   transition: background-color 0.3s;
 }
 
-/* ===== Widgets ===== */
+/* Widgets */
 /* Content boxes with shadow and rounded corners */
 
 button {
@@ -172,7 +172,7 @@ button {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* ===== Buttons ===== */
+/* Buttons */
 /* General button setup */
 
 .btn-blue { background-color: var(--btn-primary-bg); color: white; }
@@ -203,7 +203,7 @@ button {
   border-radius: 4px;
 }
 
-/* ===== Task List Buttons ===== */
+/* Task List Buttons */
 /* Smaller buttons inside task list items */
 
 #deletedList li .task-actions {
@@ -224,7 +224,7 @@ button {
   padding: 10px;
 }
 
-/* ===== Mobile Header ===== */
+/* Mobile Header */
 /* Header shown on top when using mobile view */
 
 .mobile-header button {
@@ -283,7 +283,7 @@ button {
 }
 /* Very small screens */
 
-/* ===== Responsive ===== */
+/* Responsive */
 /* Adjust layout for smaller screens */
 
 .modal-content {
@@ -309,7 +309,7 @@ body.dark-mode .modal-header {
 }
 /* Dark mode header (contrasting but dark-friendly) */
 
-/* ===== Modal Styling ===== */
+/* Modal Styling */
 /* Popup window look and feel */
 
 .dark-mode-toggle {
@@ -322,7 +322,7 @@ body.dark-mode .modal-header {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* ===== Dark Mode Toggle in Sidebar ===== */
+/* Dark Mode Toggle in Sidebar */
 /* Switch to turn dark mode on/off */
 
 .dark-mode-toggle i {
