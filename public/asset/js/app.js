@@ -40,6 +40,9 @@ const deletedConfirmModalEl = document.getElementById('deletedConfirmModal');
 const deletedConfirmModal = deletedConfirmModalEl ? new bootstrap.Modal(deletedConfirmModalEl) : null;
 const deletedConfirmBtn = document.getElementById('deletedConfirmBtn');
 
+const editConfirmModalEl = document.getElementById('editConfirmModal');
+const editConfirmModal = editConfirmModalEl ? new bootstrap.Modal(editConfirmModalEl) : null;
+
 const recoverConfirmModalEl = document.getElementById('recoverConfirmModal');
 const recoverConfirmModal = recoverConfirmModalEl ? new bootstrap.Modal(recoverConfirmModalEl) : null;
 const recoverConfirmBtn = document.getElementById('recoverConfirmBtn');
@@ -333,15 +336,39 @@ function openEditModal(task) {
   editModal.show(); // Show the edit modal
 
   // Handle the form submission for updating the task
-  editForm.onsubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    task.title = editTitle.value; // Update task title
-    task.body = editBody.value; // Update task body
-    await updateTaskOnServer(task); // Update task on the server
-    editModal.hide(); // Close the modal
-    loadTasks(); // Reload tasks after updating
-  };
+async function performUpdate() {
+  // Disable the confirm button while we wait to avoid double-clicks
+  if (editConfirmBtn) editConfirmBtn.disabled = true;
+  task.title = editTitle.value;
+  task.body = editBody.value;
+  await updateTaskOnServer(task);
+  if (editModal) editModal.hide();
+  loadTasks();
+  if (editConfirmBtn) editConfirmBtn.disabled = false;
 }
+
+// When the form is submitted, show the confirmation modal instead of immediately updating:
+editForm.onsubmit = (e) => {
+  e.preventDefault();
+
+  // If confirmation modal not present (fallback), perform update immediately
+  if (!editConfirmModal || !editConfirmBtn) {
+    performUpdate();
+    return;
+  }
+
+  // Set a one-shot onclick handler: overwrite previous handler to avoid multiple handlers
+  editConfirmBtn.onclick = async () => {
+    await performUpdate();
+    editConfirmModal.hide();
+    // clear the onclick to avoid keeping references (optional)
+    editConfirmBtn.onclick = null;
+  };
+
+  // Show the confirmation modal
+  editConfirmModal.show();
+}
+};
 
 // --------------------------- // INITIAL LOAD // ---------------------------
 
