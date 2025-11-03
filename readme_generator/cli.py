@@ -63,7 +63,7 @@ class CLI:
                     "Creative Commons (CC0)",
                     "Creative Commons (CC BY-SA)",
                     "Unlicense",
-                    "Commercial License Only - \"See Licence.md\"",
+                    "Commercial License Only - \"See Licenses.md\"",
                 ],
             },
             # Add license selector

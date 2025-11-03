@@ -25,7 +25,7 @@ This is a simple Note Taking and Tracking Application, with responsive web appli
 ---
 
 ## How To Use
-1. Before usage of this application/software/repo, please contact Tri Ng, by following the steps prescribed in Licences.md; 
+1. Before usage of this application/software/repo, please contact Tri Ng, by following the steps prescribed in Licenses.md; 
 2. Clone or download the repo into your local working folder; 
 3. Open "index.htm" in your browser; 
 4. Use the sidebar to navigate between Current (Active), Deleted, or Completed Notes; 
