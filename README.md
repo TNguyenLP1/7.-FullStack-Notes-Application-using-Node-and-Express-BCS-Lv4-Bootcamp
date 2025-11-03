@@ -37,6 +37,21 @@ This is a simple Note Taking and Tracking Application, with responsive web appli
 
 ---
 
+## Project Incorporation
+This project was made possible by integrating code snippets, theories, and practical frameworks from previous
+project designated to the completion of the BCS Level 4 BootCamp in Full Stack Software Development. This
+included but is not limited to:
+
+1. Multi-pages layout, responsiveness, pseudo-element and persistent layout from Project **2 - Multi-page Responsive Website**;
+2. Modal classes, boostraps frame work, and styling from **Project 3 - Migrating a Site to Bootstrap**;
+3. Get media responsive layout scaling, webpage overall layout, and UI input format from **Project 4 - The Interactive To Do List**;
+4. Async functionality, and API calling with server get/post dynamics from collaborative **Project 5 - Collaboration Group Project Music App**; and
+5. Addition of the README.md generator from **Project 6 - GitHub README.md Generator**.
+
+These integration and implementation of these functionality, has allowed for the production of this comprehensive, and functional Full-Stack application. Should a free copy is requried, where ***individuals*** wished to not pay the licenses fee, they are encourage to go through my - Github @ TNguyenLP1 public Repo and build this application themselves.
+
+---
+
 ## License
 This project is licensed under the **Commercial License Only - "See Licence.md"**.
 
