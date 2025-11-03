@@ -60,8 +60,10 @@ class CLI:
                     "GNU General Public License v3 (GPLv3)",
                     "GNU Lesser General Public License v3 (LGPLv3)",
                     "Mozilla Public License 2.0 (MPL 2.0)",
-                    "Creative Commons (CC0 / CC BY)",
+                    "Creative Commons (CC0)",
+                    "Creative Commons (CC BY-SA)",
                     "Unlicense",
+                    "Commercial License Only - \"See Licence.md\"",
                 ],
             },
             # Add license selector
