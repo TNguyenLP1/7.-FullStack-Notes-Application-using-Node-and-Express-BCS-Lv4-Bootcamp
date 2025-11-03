@@ -304,7 +304,7 @@ button {
 }
 
 body.dark-mode .modal-header {
-  background-color: #1c1c1c; /* darker grey tone for dark mode */
+  background-color: #121212; /* darker grey tone for dark mode */
   color: white; /* keep text white for readability */
 }
 /* Dark mode header (contrasting but dark-friendly) */
